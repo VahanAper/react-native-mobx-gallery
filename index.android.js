@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
 
 import { LANDSCAPE, PORTRAIT } from './constants';
 import Store from './store';
+import Gallery from './src/components/gallery';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,16 +48,7 @@ export default class mobxApp extends Component {
     return (
       <Provider store={Store}>
         <View style={styles.container} onLayout={this.onLayoutChange}>
-          <Text style={styles.welcome}>
-            Welcome to React Native!
-          </Text>
-          <Text style={styles.instructions}>
-            To get started, edit index.android.js
-          </Text>
-          <Text style={styles.instructions}>
-            Double tap R on your keyboard to reload,{'\n'}
-            Shake or press menu button for dev menu
-          </Text>
+          <Gallery />
         </View>
       </Provider>
     );
