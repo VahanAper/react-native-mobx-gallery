@@ -2,7 +2,7 @@
     "extends": "airbnb",
     "parser": "babel-eslint",
     "rules": {
-      "linebreak-style": ["error", "windows"],
+      "linebreak-style": 0,
       "no-unused-vars": 1,
       "consistent-return": 0,
       "func-names": 0,

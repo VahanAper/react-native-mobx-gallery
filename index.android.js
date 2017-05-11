@@ -1,35 +1,14 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
+import { Provider, observer } from 'mobx-react';
 
-export default class mobx_app extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
-  }
-}
+import { LANDSCAPE, PORTRAIT } from './constants';
+import Store from './store';
 
 const styles = StyleSheet.create({
   container: {
@@ -50,4 +29,39 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('mobx_app', () => mobx_app);
+@observer
+export default class mobxApp extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onLayoutChange = this.onLayoutChange.bind(this);
+  }
+
+  onLayoutChange(event) {
+    const { width, height } = event.nativeEvent.layout;
+    const orientation = (width > height) ? LANDSCAPE : PORTRAIT;
+
+    Store.changeOrientation(orientation);
+  }
+
+  render() {
+    return (
+      <Provider store={Store}>
+        <View style={styles.container} onLayout={this.onLayoutChange}>
+          <Text style={styles.welcome}>
+            Welcome to React Native!
+          </Text>
+          <Text style={styles.instructions}>
+            To get started, edit index.android.js
+          </Text>
+          <Text style={styles.instructions}>
+            Double tap R on your keyboard to reload,{'\n'}
+            Shake or press menu button for dev menu
+          </Text>
+        </View>
+      </Provider>
+    );
+  }
+}
+
+AppRegistry.registerComponent('mobx_app', () => mobxApp);
