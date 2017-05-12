@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 
 import TouchableImage from './touchable_image';
 
+@inject('store') @observer
 class Gallery extends Component {
   render() {
-    const { image, store } = this.props;
+    const { store } = this.props;
+
+    if (!store.currentImage) {
+      return null;
+    }
 
     return (
-      <TouchableImage
-        image={{
-          link: 'https://cdn.spacetelescope.org/archives/images/wallpaper2/heic1501a.jpg',
-          title: 'New view of the Pillars of Creation',
-        }}
-      />
+      <TouchableImage image={store.currentImage} />
     );
   }
 }

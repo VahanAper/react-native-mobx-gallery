@@ -37,6 +37,10 @@ export default class mobxApp extends Component {
     this.onLayoutChange = this.onLayoutChange.bind(this);
   }
 
+  componentWillMount() {
+    Store.fetchImages();
+  }
+
   onLayoutChange(event) {
     const { width, height } = event.nativeEvent.layout;
     const orientation = (width > height) ? LANDSCAPE : PORTRAIT;
