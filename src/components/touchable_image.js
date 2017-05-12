@@ -46,14 +46,18 @@ class TouchableImage extends Component {
   }
 
   render() {
-    const { image, store } = this.props;
+    const { image, store, height } = this.props;
     const uri = image.link.replace('http://', 'https://');
 
     return (
       <TouchableHighlight onPress={this.onImagePress} style={styles.fullscreen}>
         <Image
           source={{ uri }}
-          style={[styles.backgroundImage, styles[store.orientation.toLowerCase()]]}
+          style={[
+            styles.backgroundImage,
+            styles[store.orientation.toLowerCase()],
+            { height: height || null },
+          ]}
           onLayout={this.onImageLayout}
         >
           <Text style={styles.imageLabel}>{this.caption}</Text>

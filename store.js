@@ -15,9 +15,18 @@ class Store {
   @observable index = 0;
   @observable galleryPage = 0;
   @observable albums = new observable.map();
+  @observable screenSize = {
+    width: null,
+    height: null,
+  };
 
   @action changeOrientation(orientation) {
     this.orientation = orientation;
+  }
+
+  @action updateScreenSize(width, height) {
+    this.screenSize.width = width;
+    this.screenSize.height = height;
   }
 
   @action previousImage() {
