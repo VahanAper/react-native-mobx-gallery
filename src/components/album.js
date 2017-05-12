@@ -32,7 +32,6 @@ class Album extends Component {
   }
 
   get dataSource() {
-    const { store, albumID } = this.props;
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1.id !== r2.id,
     });
@@ -70,7 +69,6 @@ class Album extends Component {
   }
 
   render() {
-    const { store, albumID } = this.props;
     const album = this.album;
 
     if (album) {

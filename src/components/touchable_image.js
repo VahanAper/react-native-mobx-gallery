@@ -15,10 +15,13 @@ class TouchableImage extends Component {
 
     this.onImageLayout = this.onImageLayout.bind(this);
     this.onImagePress = this.onImagePress.bind(this);
+    this.onImagePressIn = this.onImagePressIn.bind(this);
+    this.onImagePressOut = this.onImagePressOut.bind(this);
   }
 
   state = {
     width: null,
+    hideCaption: false,
   }
 
   onImagePress(event) {
@@ -31,6 +34,14 @@ class TouchableImage extends Component {
     } else {
       store.nextImage();
     }
+  }
+
+  onImagePressIn() {
+    this.setState({ hideCaption: true });
+  }
+
+  onImagePressOut() {
+    this.setState({ hideCaption: false });
   }
 
   onImageLayout(event) {
@@ -48,9 +59,15 @@ class TouchableImage extends Component {
   render() {
     const { image, store, height } = this.props;
     const uri = image.link.replace('http://', 'https://');
+    const hideCaption = this.state.hideCaption ? styles.hiddenLabel : null;
 
     return (
-      <TouchableHighlight onPress={this.onImagePress} style={styles.fullscreen}>
+      <TouchableHighlight
+        style={styles.fullscreen}
+        onPress={this.onImagePress}
+        onPressIn={this.onImagePressIn}
+        onPressOut={this.onImagePressOut}
+      >
         <Image
           source={{ uri }}
           style={[
@@ -60,7 +77,7 @@ class TouchableImage extends Component {
           ]}
           onLayout={this.onImageLayout}
         >
-          <Text style={styles.imageLabel}>{this.caption}</Text>
+          {this.caption ? <Text style={[styles.imageLabel, hideCaption]}>{this.caption}</Text> : null}
         </Image>
       </TouchableHighlight>
     );
